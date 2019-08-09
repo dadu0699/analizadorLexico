@@ -21,23 +21,23 @@ namespace analizadorLexico
 
         public LinkedList<Token> escaner(String entrada)
         {
-            entrada = entrada + "#";
+            entrada += "#";
             Char caracter;
 
-            for (int i = 0; i < (entrada.Length - 1); i++)
+            for (int i = 0; i < entrada.Length; i++)
             {
                 caracter = entrada.ElementAt(i);
                 switch (estado)
                 {
                     case 0:
                         // Palabra Reservada
-                        if (Char.IsLetter(caracter))
+                        if (char.IsLetter(caracter))
                         {
                             estado = 1;
                             auxiliarLexema += caracter;
                         }
                         // Digito
-                        else if (Char.IsDigit(caracter))
+                        else if (char.IsDigit(caracter))
                         {
                             estado = 2;
                             auxiliarLexema += caracter;
@@ -48,19 +48,21 @@ namespace analizadorLexico
                             estado = 3;
                             auxiliarLexema += caracter;
                         }
-                        // Simbolo
-                        else if (agregarSimbolo(caracter))
+                        else if (char.IsWhiteSpace(caracter) || caracter.Equals('\n'))
                         {
+                            estado = 0;
+                            auxiliarLexema = "";
                         }
-                        else 
+                        // Simbolo
+                        else if (!agregarSimbolo(caracter))
                         {
-                            if (caracter.CompareTo('#') == 0 && i == entrada.Length - 1)
+                            if (caracter.Equals('#')  && i == (entrada.Length - 1))
                             {
                                 Console.WriteLine("Analisis finalizado");
                             }
                             else
                             {
-                                Console.WriteLine("Error lexico: " + caracter);
+                                Console.WriteLine("Error lexico: No se encotro '" + caracter + "' en los patrones definidos");
                                 estado = 0;
                             }
                         }
@@ -200,7 +202,7 @@ namespace analizadorLexico
             }
             else
             {
-                Console.WriteLine("Error sintactico: " + auxiliarLexema);
+                Console.WriteLine("Error lexico: No se encotró '" + auxiliarLexema + "' en los patrones definidos");
                 auxiliarLexema = "";
                 estado = 0;
             }

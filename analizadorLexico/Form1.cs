@@ -80,7 +80,7 @@ namespace analizadorLexico
 
             TextBox txtBox = new TextBox();
             txtBox.BackColor = Color.FromArgb(31, 36, 48);
-            txtBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            txtBox.BorderStyle = BorderStyle.Fixed3D;
             txtBox.Font = new Font("Microsoft Sans Serif", 12);
             txtBox.ForeColor = Color.FromArgb(203, 204, 198);
             txtBox.Dock = DockStyle.Fill;
@@ -117,11 +117,16 @@ namespace analizadorLexico
 
         private void ButtonAnalizar_Click(object sender, EventArgs e)
         {
-            String entrada = textBox1.Text;
+            // Console.WriteLine(tabControl1.SelectedTab);
+            TextBox txtBox = tabControl1.SelectedTab.Controls.Cast<TextBox>().FirstOrDefault(x => x is TextBox);
+
+            // Console.WriteLine(txtBox.Text);
+            // txtBox.Text = txtBox.Text.Replace("\t", "  ");
+
+            String entrada = txtBox.Text;
             AnalizadorLex lex = new AnalizadorLex();
             LinkedList<Token> lTokens = lex.escaner(entrada);
             lex.imprimirTokens(lTokens);
-
         }
     }
 }
