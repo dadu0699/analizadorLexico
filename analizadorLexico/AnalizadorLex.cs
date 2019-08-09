@@ -8,5 +8,217 @@ namespace analizadorLexico
 {
     class AnalizadorLex
     {
+        private LinkedList<Token> linkedListSalida;
+        private String auxiliarLexema;
+        private int estado;
+
+        public AnalizadorLex()
+        {
+            linkedListSalida = new LinkedList<Token>();
+            auxiliarLexema = "";
+            estado = 0;
+        }
+
+        public LinkedList<Token> escaner(String entrada)
+        {
+            entrada = entrada + "#";
+            Char caracter;
+
+            for (int i = 0; i < (entrada.Length - 1); i++)
+            {
+                caracter = entrada.ElementAt(i);
+                switch (estado)
+                {
+                    case 0:
+                        // Palabra Reservada
+                        if (Char.IsLetter(caracter))
+                        {
+                            estado = 1;
+                            auxiliarLexema += caracter;
+                        }
+                        // Digito
+                        else if (Char.IsDigit(caracter))
+                        {
+                            estado = 2;
+                            auxiliarLexema += caracter;
+                        }
+                        // Cadena
+                        else if (caracter.Equals('"'))
+                        {
+                            estado = 3;
+                            auxiliarLexema += caracter;
+                        }
+                        // Simbolo
+                        else if (agregarSimbolo(caracter))
+                        {
+                        }
+                        else 
+                        {
+                            if (caracter.CompareTo('#') == 0 && i == entrada.Length - 1)
+                            {
+                                Console.WriteLine("Analisis finalizado");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Error lexico: " + caracter);
+                                estado = 0;
+                            }
+                        }
+                        break;
+                    case 1:
+                        if (Char.IsLetter(caracter))
+                        {
+                            estado = 1;
+                            auxiliarLexema += caracter;
+                        }
+                        else
+                        {
+                            agregarPalabraR();
+                            i -= 1;
+                        }
+                        break;
+                    case 2:
+                        if (Char.IsDigit(caracter))
+                        {
+                            estado = 2;
+                            auxiliarLexema += caracter;
+                        }
+                        else
+                        {
+                            agregarToken(Token.Tipo.NUMERO);
+                            i -= 1;
+                        }
+                        break;
+                    case 3:
+                        if (!caracter.Equals('"'))
+                        {
+                            estado = 3;
+                            auxiliarLexema += caracter;
+                        }
+                        else
+                        {
+                            auxiliarLexema += caracter;
+                            agregarToken(Token.Tipo.CADENA);
+                        }
+                        break;
+                }
+            }
+
+            return linkedListSalida;
+        }
+
+        public Boolean agregarSimbolo(Char caracter)
+        {
+            if (caracter.Equals('['))
+            {
+                auxiliarLexema += caracter;
+                agregarToken(Token.Tipo.SIMBOLO_CORCHETE_IZQ);
+                return true;
+            }
+            else if (caracter.Equals(']'))
+            {
+                auxiliarLexema += caracter;
+                agregarToken(Token.Tipo.SIMBOLO_CORCHETE_DCHO);
+                return true;
+            }
+            else if (caracter.Equals('{'))
+            {
+                auxiliarLexema += caracter;
+                agregarToken(Token.Tipo.SIMBOLO_LLAVE_IZQ);
+                return true;
+            }
+            else if (caracter.Equals('}'))
+            {
+                auxiliarLexema += caracter;
+                agregarToken(Token.Tipo.SIMBOLO_LLAVE_DCHO);
+                return true;
+            }
+            else if (caracter.Equals('('))
+            {
+                auxiliarLexema += caracter;
+                agregarToken(Token.Tipo.SIMBOLO_PARENTESIS_IZQ);
+                return true;
+            }
+            else if (caracter.Equals(')'))
+            {
+                auxiliarLexema += caracter;
+                agregarToken(Token.Tipo.SIMBOLO_PARENTESIS_DCHO);
+                return true;
+            }
+            else if (caracter.Equals('<'))
+            {
+                auxiliarLexema += caracter;
+                agregarToken(Token.Tipo.SIMBOLO_MENOR_QUE);
+                return true;
+            }
+            else if (caracter.Equals('>'))
+            {
+                auxiliarLexema += caracter;
+                agregarToken(Token.Tipo.SIMBOLO_MAYOR_QUE);
+                return true;
+            }
+            else if (caracter.Equals(':'))
+            {
+                auxiliarLexema += caracter;
+                agregarToken(Token.Tipo.SIMBOLO_DOS_PUNTOS);
+                return true;
+            }
+            else if (caracter.Equals(';'))
+            {
+                auxiliarLexema += caracter;
+                agregarToken(Token.Tipo.SIMBOLO_PUNTO_Y_COMA);
+                return true;
+            }
+            return false;
+        }
+
+        public void agregarPalabraR()
+        {
+            if (auxiliarLexema.Equals("planificador", StringComparison.InvariantCultureIgnoreCase))
+            {
+                agregarToken(Token.Tipo.RESERVADA_PLANIFICADOR);
+            }
+            else if (auxiliarLexema.Equals("anio", StringComparison.InvariantCultureIgnoreCase))
+            {
+                agregarToken(Token.Tipo.RESERVADA_ANIO);
+            }
+            else if (auxiliarLexema.Equals("mes", StringComparison.InvariantCultureIgnoreCase))
+            {
+                agregarToken(Token.Tipo.RESERVADA_MES);
+            }
+            else if (auxiliarLexema.Equals("dia", StringComparison.InvariantCultureIgnoreCase))
+            {
+                agregarToken(Token.Tipo.RESERVADA_DIA);
+            }
+            else if (auxiliarLexema.Equals("descripcion", StringComparison.InvariantCultureIgnoreCase))
+            {
+                agregarToken(Token.Tipo.RESERVADA_DESCRIPCION);
+            }
+            else if (auxiliarLexema.Equals("imagen", StringComparison.InvariantCultureIgnoreCase))
+            {
+                agregarToken(Token.Tipo.RESERVADA_IMAGEN);
+            }
+            else
+            {
+                Console.WriteLine("Error sintactico: " + auxiliarLexema);
+                auxiliarLexema = "";
+                estado = 0;
+            }
+        }
+
+        public void agregarToken(Token.Tipo tipo)
+        {
+            linkedListSalida.AddLast(new Token(tipo, auxiliarLexema));
+            auxiliarLexema = "";
+            estado = 0;
+        }
+
+        public void imprimirTokens(LinkedList<Token> linkedList)
+        {
+            foreach (Token item in linkedList)
+            {
+                Console.WriteLine(item.TipoToken + " <--> " + item.Valor);
+            }
+        }
     }
 }

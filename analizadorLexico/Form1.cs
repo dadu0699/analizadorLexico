@@ -24,7 +24,7 @@ namespace analizadorLexico
             minimizeButton.MouseEnter += OnMouseEnter;
             minimizeButton.MouseLeave += OnMouseLeave;
 
-            this.tabControl1.MouseUp += new System.Windows.Forms.MouseEventHandler(tabControl1_MouseUp);
+            this.tabControl1.MouseUp += new MouseEventHandler(tabControl1_MouseUp);
 
             menu.Renderer = new MyRenderer();
         }
@@ -83,8 +83,13 @@ namespace analizadorLexico
             txtBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             txtBox.Font = new Font("Microsoft Sans Serif", 12);
             txtBox.ForeColor = Color.FromArgb(203, 204, 198);
-            txtBox.Multiline = true;
             txtBox.Dock = DockStyle.Fill;
+            // Set the Multiline property to true.
+            txtBox.Multiline = true;
+            // Allow the TAB key to be entered in the TextBox control.
+            txtBox.AcceptsTab = true;
+            // Add vertical scroll bars to the TextBox control.
+            txtBox.ScrollBars = ScrollBars.Vertical;
 
             tabPage.Controls.Add(txtBox);
             tabControl1.TabPages.Add(tabPage);
@@ -108,6 +113,15 @@ namespace analizadorLexico
         private void SalirToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void ButtonAnalizar_Click(object sender, EventArgs e)
+        {
+            String entrada = textBox1.Text;
+            AnalizadorLex lex = new AnalizadorLex();
+            LinkedList<Token> lTokens = lex.escaner(entrada);
+            lex.imprimirTokens(lTokens);
+
         }
     }
 }
