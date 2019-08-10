@@ -46,7 +46,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.treeView = new System.Windows.Forms.TreeView();
             this.panel3 = new System.Windows.Forms.Panel();
             this.buttonAnalizar = new System.Windows.Forms.Button();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
@@ -244,20 +244,20 @@
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.Transparent;
-            this.panel4.Controls.Add(this.treeView1);
+            this.panel4.Controls.Add(this.treeView);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel4.Location = new System.Drawing.Point(256, 0);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(256, 273);
             this.panel4.TabIndex = 2;
             // 
-            // treeView1
+            // treeView
             // 
-            this.treeView1.BackColor = System.Drawing.Color.White;
-            this.treeView1.Location = new System.Drawing.Point(10, 22);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(236, 241);
-            this.treeView1.TabIndex = 0;
+            this.treeView.BackColor = System.Drawing.Color.White;
+            this.treeView.Location = new System.Drawing.Point(10, 22);
+            this.treeView.Name = "treeView";
+            this.treeView.Size = new System.Drawing.Size(236, 241);
+            this.treeView.TabIndex = 0;
             // 
             // panel3
             // 
@@ -339,7 +339,6 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.menu.ResumeLayout(false);
             this.menu.PerformLayout();
             this.menuTop.ResumeLayout(false);
@@ -376,7 +375,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.TreeView treeView;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel3;

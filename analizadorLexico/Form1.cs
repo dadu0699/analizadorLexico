@@ -113,16 +113,6 @@ namespace analizadorLexico
             Application.Exit();
         }
 
-        private void ButtonAnalizar_Click(object sender, EventArgs e)
-        {
-            TextBox txtBox = tabControl1.SelectedTab.Controls.Cast<TextBox>().FirstOrDefault(x => x is TextBox);
-
-            String entrada = txtBox.Text;
-            AnalizadorLex lex = new AnalizadorLex();
-            lex.escaner(entrada);
-            lex.imprimirTokens();
-        }
-
         private void CargarArchivoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -137,6 +127,7 @@ namespace analizadorLexico
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
+                txtBox.Clear();
                 StreamReader streamReader = new StreamReader(openFileDialog.FileName);
                 while (line != null)
                 {
@@ -178,9 +169,31 @@ namespace analizadorLexico
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void ButtonAnalizar_Click(object sender, EventArgs e)
         {
+            AnalizadorLex analizadorLex = new AnalizadorLex();
+            AnalizadorSemantico analizadorSemantico = new AnalizadorSemantico();
 
+            TextBox txtBox = tabControl1.SelectedTab.Controls.Cast<TextBox>().FirstOrDefault(x => x is TextBox);
+            String entrada = txtBox.Text;
+            analizadorLex.escaner(entrada);
+
+
+            treeView.Nodes.Clear();
+
+            if (!analizadorLex.ListError.Any())
+            {
+                if (analizadorLex.ListToken.Any())
+                {
+                    // analizadorLex.imprimirTokens();
+                    analizadorSemantico.analizar(analizadorLex.ListToken);
+
+                }
+            }
+            else
+            {
+                // analizadorLex.imprimirErrores();
+            }
         }
     }
 }

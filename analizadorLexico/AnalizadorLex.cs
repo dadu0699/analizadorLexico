@@ -8,8 +8,6 @@ namespace analizadorLexico
 {
     class AnalizadorLex
     {
-        private LinkedList<Token> linkedListToken;
-        private LinkedList<Error> linkedListError;
         private String auxiliarLexema;
         private int estado;
         private int idToken;
@@ -17,10 +15,13 @@ namespace analizadorLexico
         private int fila = 1;
         private int columna = 1;
 
+        internal List<Token> ListToken { get; set; }
+        internal List<Error> ListError { get; set; }
+
         public AnalizadorLex()
         {
-            linkedListToken = new LinkedList<Token>();
-            linkedListError = new LinkedList<Error>();
+            ListToken = new List<Token>();
+            ListError = new List<Error>();
             auxiliarLexema = "";
             estado = 0;
             idToken = 0;
@@ -75,7 +76,7 @@ namespace analizadorLexico
                         {
                             if (caracter.Equals('#')  && i == (entrada.Length - 1))
                             {
-                                Console.WriteLine("Analisis finalizado");
+                                Console.WriteLine("Analisis lexico finalizado");
                             }
                             else
                             {
@@ -94,7 +95,7 @@ namespace analizadorLexico
                         else
                         {
                             agregarPalabraR();
-                            i -= 1;
+                            i --;
                         }
                         break;
                     case 2:
@@ -106,7 +107,7 @@ namespace analizadorLexico
                         else
                         {
                             agregarToken(Token.Tipo.NUMERO);
-                            i -= 1;
+                            i --;
                         }
                         break;
                     case 3:
@@ -229,7 +230,7 @@ namespace analizadorLexico
         public void agregarToken(Token.Tipo tipo)
         {
             idToken++;
-            linkedListToken.AddLast(new Token(idToken, tipo, auxiliarLexema));
+            ListToken.Add(new Token(idToken, tipo, auxiliarLexema));
             auxiliarLexema = "";
             estado = 0;
         }
@@ -237,12 +238,12 @@ namespace analizadorLexico
         public void agregarError(string cadena)
         {
             idError++;
-            linkedListError.AddLast(new Error(idError, fila, columna, cadena, "Patron desconocido"));
+            ListError.Add(new Error(idError, fila, columna, cadena, "Patron desconocido"));
         }
 
         public void imprimirTokens()
         {
-            foreach (Token item in linkedListToken)
+            foreach (Token item in ListToken)
             {
                 Console.WriteLine(item.TipoToken + " <--> " + item.Valor);
             }
@@ -250,7 +251,7 @@ namespace analizadorLexico
 
         public void imprimirErrores()
         {
-            foreach (Error item in linkedListError)
+            foreach (Error item in ListError)
             {
                 Console.WriteLine(item.IdError + " <--> " + item.Fila + " <--> " + item.Columna
                     + " <--> " + item.Caracter + " <--> " + item.Descripcion);
