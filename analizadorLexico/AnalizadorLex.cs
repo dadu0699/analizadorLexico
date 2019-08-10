@@ -246,10 +246,13 @@ namespace analizadorLexico
             {
                 Console.WriteLine(item.TipoToken + " <--> " + item.Valor);
             }
+        }
 
+        public void imprimirErrores()
+        {
             foreach (Error item in linkedListError)
             {
-                Console.WriteLine(item.IdError + " <--> " + item.Fila + " <--> " + item.Columna 
+                Console.WriteLine(item.IdError + " <--> " + item.Fila + " <--> " + item.Columna
                     + " <--> " + item.Caracter + " <--> " + item.Descripcion);
             }
         }

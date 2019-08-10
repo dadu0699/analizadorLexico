@@ -109,6 +109,7 @@
             this.cargarArchivoToolStripMenuItem.Name = "cargarArchivoToolStripMenuItem";
             this.cargarArchivoToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.cargarArchivoToolStripMenuItem.Text = "Cargar Archivo";
+            this.cargarArchivoToolStripMenuItem.Click += new System.EventHandler(this.CargarArchivoToolStripMenuItem_Click);
             // 
             // guardarArchivoToolStripMenuItem
             // 
@@ -117,6 +118,7 @@
             this.guardarArchivoToolStripMenuItem.Name = "guardarArchivoToolStripMenuItem";
             this.guardarArchivoToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.guardarArchivoToolStripMenuItem.Text = "Guardar Archivo";
+            this.guardarArchivoToolStripMenuItem.Click += new System.EventHandler(this.GuardarArchivoToolStripMenuItem_Click);
             // 
             // salirToolStripMenuItem
             // 
@@ -337,6 +339,7 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.menu.ResumeLayout(false);
             this.menu.PerformLayout();
             this.menuTop.ResumeLayout(false);

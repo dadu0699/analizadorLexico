@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -84,11 +85,8 @@ namespace analizadorLexico
             txtBox.Font = new Font("Microsoft Sans Serif", 12);
             txtBox.ForeColor = Color.FromArgb(203, 204, 198);
             txtBox.Dock = DockStyle.Fill;
-            // Set the Multiline property to true.
             txtBox.Multiline = true;
-            // Allow the TAB key to be entered in the TextBox control.
             txtBox.AcceptsTab = true;
-            // Add vertical scroll bars to the TextBox control.
             txtBox.ScrollBars = ScrollBars.Vertical;
 
             tabPage.Controls.Add(txtBox);
@@ -117,16 +115,72 @@ namespace analizadorLexico
 
         private void ButtonAnalizar_Click(object sender, EventArgs e)
         {
-            // Console.WriteLine(tabControl1.SelectedTab);
             TextBox txtBox = tabControl1.SelectedTab.Controls.Cast<TextBox>().FirstOrDefault(x => x is TextBox);
-
-            // Console.WriteLine(txtBox.Text);
-            // txtBox.Text = txtBox.Text.Replace("\t", "  ");
 
             String entrada = txtBox.Text;
             AnalizadorLex lex = new AnalizadorLex();
             lex.escaner(entrada);
             lex.imprimirTokens();
+        }
+
+        private void CargarArchivoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = @"C:\";
+            openFileDialog.RestoreDirectory = true;
+            openFileDialog.FileName = "";
+            openFileDialog.DefaultExt = "ly";
+            openFileDialog.Filter = "Archivos LY (*.ly)|*.ly";
+
+            TextBox txtBox = tabControl1.SelectedTab.Controls.Cast<TextBox>().FirstOrDefault(x => x is TextBox);
+            String line = "";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                StreamReader streamReader = new StreamReader(openFileDialog.FileName);
+                while (line != null)
+                {
+                    line = streamReader.ReadLine();
+                    if (line != null)
+                    {
+                        txtBox.AppendText(line);
+                        txtBox.AppendText(Environment.NewLine);
+                    }
+                }
+                streamReader.Close();
+
+                tabControl1.SelectedTab.Text = openFileDialog.FileName;
+            }
+        }
+
+        private void GuardarArchivoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.InitialDirectory = @"C:\";
+            saveFileDialog.RestoreDirectory = true;
+            saveFileDialog.FileName = "";
+            saveFileDialog.DefaultExt = "ly";
+            saveFileDialog.Filter = "Archivos LY (*.ly)|*.ly";
+
+            TextBox txtBox = tabControl1.SelectedTab.Controls.Cast<TextBox>().FirstOrDefault(x => x is TextBox);
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                Stream fileStream = saveFileDialog.OpenFile();
+                StreamWriter streamWriter = new StreamWriter(fileStream);
+                streamWriter.Write(txtBox.Text);
+                streamWriter.Close();
+                fileStream.Close();
+
+                tabControl1.SelectedTab.Text = saveFileDialog.FileName;
+                Console.WriteLine("Archivo " + saveFileDialog.FileName + " guardado con exito");
+                // txtBox.Clear();
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
