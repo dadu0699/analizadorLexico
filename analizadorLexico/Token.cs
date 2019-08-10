@@ -30,15 +30,19 @@ namespace analizadorLexico
             CADENA
         }
 
+        private int idToken;
         private Tipo tipoToken;
         private String valor;
 
-        public Token(Tipo tipoToken, String valor)
+        public Token(int idToken, Tipo tipoToken, string valor)
         {
+            this.idToken = idToken;
             this.tipoToken = tipoToken;
             this.valor = valor;
         }
 
+        public int IdToken { get => idToken; set => idToken = value; }
+        public string Valor { get => valor; set => valor = value; }
         public String TipoToken
         {
             get
@@ -87,10 +91,6 @@ namespace analizadorLexico
             }
         }
 
-        public String Valor
-        {
-            get { return valor; }
-            set { valor = value; }
-        }
+
     }
 }

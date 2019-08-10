@@ -8,21 +8,31 @@ namespace analizadorLexico
 {
     class AnalizadorLex
     {
-        private LinkedList<Token> linkedListSalida;
+        private LinkedList<Token> linkedListToken;
+        private LinkedList<Error> linkedListError;
         private String auxiliarLexema;
         private int estado;
+        private int idToken;
+        private int idError;
+        private int fila = 1;
+        private int columna = 1;
 
         public AnalizadorLex()
         {
-            linkedListSalida = new LinkedList<Token>();
+            linkedListToken = new LinkedList<Token>();
+            linkedListError = new LinkedList<Error>();
             auxiliarLexema = "";
             estado = 0;
+            idToken = 0;
+            idError = 0;
+            fila = 1;
+            columna = 1;
         }
 
-        public LinkedList<Token> escaner(String entrada)
+        public void escaner(String entrada)
         {
-            entrada += "#";
             Char caracter;
+            entrada += "#";
 
             for (int i = 0; i < entrada.Length; i++)
             {
@@ -48,10 +58,17 @@ namespace analizadorLexico
                             estado = 3;
                             auxiliarLexema += caracter;
                         }
-                        else if (char.IsWhiteSpace(caracter) || caracter.Equals('\n'))
+                        // Espacios en blanco y saltos de linea
+                        else if (char.IsWhiteSpace(caracter))
                         {
                             estado = 0;
                             auxiliarLexema = "";
+                            // Cambio de fila y reinicio de columnas en los saltos de linea
+                            if (caracter.CompareTo('\n') == 0)
+                            {
+                                columna = 1;
+                                fila++;
+                            }
                         }
                         // Simbolo
                         else if (!agregarSimbolo(caracter))
@@ -63,6 +80,7 @@ namespace analizadorLexico
                             else
                             {
                                 Console.WriteLine("Error lexico: No se encotro '" + caracter + "' en los patrones definidos");
+                                agregarError(caracter.ToString());
                                 estado = 0;
                             }
                         }
@@ -104,9 +122,8 @@ namespace analizadorLexico
                         }
                         break;
                 }
+                columna++;
             }
-
-            return linkedListSalida;
         }
 
         public Boolean agregarSimbolo(Char caracter)
@@ -203,6 +220,7 @@ namespace analizadorLexico
             else
             {
                 Console.WriteLine("Error lexico: No se encotró '" + auxiliarLexema + "' en los patrones definidos");
+                agregarError(auxiliarLexema);
                 auxiliarLexema = "";
                 estado = 0;
             }
@@ -210,16 +228,29 @@ namespace analizadorLexico
 
         public void agregarToken(Token.Tipo tipo)
         {
-            linkedListSalida.AddLast(new Token(tipo, auxiliarLexema));
+            idToken++;
+            linkedListToken.AddLast(new Token(idToken, tipo, auxiliarLexema));
             auxiliarLexema = "";
             estado = 0;
         }
 
-        public void imprimirTokens(LinkedList<Token> linkedList)
+        public void agregarError(string cadena)
         {
-            foreach (Token item in linkedList)
+            idError++;
+            linkedListError.AddLast(new Error(idError, fila, columna, cadena, "Patron desconocido"));
+        }
+
+        public void imprimirTokens()
+        {
+            foreach (Token item in linkedListToken)
             {
                 Console.WriteLine(item.TipoToken + " <--> " + item.Valor);
+            }
+
+            foreach (Error item in linkedListError)
+            {
+                Console.WriteLine(item.IdError + " <--> " + item.Fila + " <--> " + item.Columna 
+                    + " <--> " + item.Caracter + " <--> " + item.Descripcion);
             }
         }
     }

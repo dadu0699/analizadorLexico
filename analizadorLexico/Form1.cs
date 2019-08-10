@@ -125,8 +125,8 @@ namespace analizadorLexico
 
             String entrada = txtBox.Text;
             AnalizadorLex lex = new AnalizadorLex();
-            LinkedList<Token> lTokens = lex.escaner(entrada);
-            lex.imprimirTokens(lTokens);
+            lex.escaner(entrada);
+            lex.imprimirTokens();
         }
     }
 }
