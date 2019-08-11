@@ -245,7 +245,7 @@ namespace analizadorLexico
         {
             foreach (Token item in ListToken)
             {
-                Console.WriteLine(item.TipoToken + " <--> " + item.Valor);
+                Console.WriteLine(item.IdToken + " " + item.TipoToken + " ---> " + item.Valor);
             }
         }
 
@@ -253,8 +253,8 @@ namespace analizadorLexico
         {
             foreach (Error item in ListError)
             {
-                Console.WriteLine(item.IdError + " <--> " + item.Fila + " <--> " + item.Columna
-                    + " <--> " + item.Caracter + " <--> " + item.Descripcion);
+                Console.WriteLine(item.IdError + " ---> " + item.Fila + " ---> " + item.Columna
+                    + " <--> " + item.Caracter + " ---> " + item.Descripcion);
             }
         }
     }

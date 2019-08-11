@@ -185,14 +185,81 @@ namespace analizadorLexico
             {
                 if (analizadorLex.ListToken.Any())
                 {
-                    // analizadorLex.imprimirTokens();
-                    analizadorSemantico.analizar(analizadorLex.ListToken);
-
+                    if (analizadorSemantico.analizar(analizadorLex.ListToken))
+                    {
+                        // analizadorLex.imprimirTokens();
+                        agregarNodos(analizadorLex.ListToken);
+                    }
                 }
             }
             else
             {
                 // analizadorLex.imprimirErrores();
+            }
+        }
+
+        private void agregarNodos(List<Token> ListToken)
+        {
+            TreeNode treeNodePlanificador = null;
+            TreeNode treeNodeAnio;
+            TreeNode treeNodeMes;
+            TreeNode treeNodeDia;
+
+            for (int i = 0; i < ListToken.Count; i++)
+            {
+                if (ListToken[i].TipoToken.Equals("Reservada Planificador"))
+                {
+                    // Nodo Planificador
+                    string cadena = ListToken[i + 2].Valor;
+                    StringBuilder expresion = new StringBuilder(cadena);
+                    expresion.Remove(0, 1);
+                    expresion.Remove((expresion.Length - 1), 1);
+                    cadena = expresion.ToString();
+                    treeNodePlanificador = new TreeNode(cadena);
+
+                    for (int j = (i + 2); j < ListToken.Count; j++)
+                    {
+                        if (ListToken[j].TipoToken.Equals("Reservada Año"))
+                        {
+                            // Nodo Año
+                            treeNodeAnio = new TreeNode(ListToken[j + 2].Valor);
+                            treeNodePlanificador.Nodes.Add(treeNodeAnio);
+
+                            for (int k = (j + 2); k < ListToken.Count; k++)
+                            {
+                                if (ListToken[k].TipoToken.Equals("Reservada Mes"))
+                                {
+                                    // Nodo Mes
+                                    treeNodeMes = new TreeNode(ListToken[k + 2].Valor);
+                                    treeNodeAnio.Nodes.Add(treeNodeMes);
+
+                                    for (int l = k + 2; l < ListToken.Count; l++)
+                                    {
+                                        if (ListToken[l].TipoToken.Equals("Reservada Dia"))
+                                        {
+                                            // Nodo Dia
+                                            treeNodeDia = new TreeNode(ListToken[l + 2].Valor);
+                                            treeNodeMes.Nodes.Add(treeNodeDia);
+                                        }
+                                        else if (ListToken[l].TipoToken.Equals("Simbolo Parentesis Derecho"))
+                                        {
+                                            break;
+                                        }
+                                    }
+                                }
+                                else if (ListToken[k].TipoToken.Equals("Simbolo Llave Derecha"))
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        else if (ListToken[j].TipoToken.Equals("Simbolo Corchete Derecho"))
+                        {
+                            break;
+                        }
+                    }
+                    treeView.Nodes.Add(treeNodePlanificador);
+                }
             }
         }
     }

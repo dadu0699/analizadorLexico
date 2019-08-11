@@ -171,7 +171,7 @@ namespace analizadorLexico
                     }
                 }
             }
-            Console.WriteLine("Analisis sintactico finalizado");
+            Console.WriteLine("Analisis semantico finalizado");
             return true;
         }
     }
