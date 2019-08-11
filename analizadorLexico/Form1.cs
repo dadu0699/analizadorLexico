@@ -13,7 +13,8 @@ namespace analizadorLexico
 {
     public partial class Form1 : Form
     {
-        private int countTab = 1;
+        private int countTab;
+        private List<Planificaciones> Listplanificaciones;
 
         public Form1()
         {
@@ -28,6 +29,9 @@ namespace analizadorLexico
             this.tabControl1.MouseUp += new MouseEventHandler(tabControl1_MouseUp);
 
             menu.Renderer = new MyRenderer();
+
+            countTab = 1;
+            Listplanificaciones = new List<Planificaciones>();
         }
 
         private void RestoreButton_Click(object sender, EventArgs e)
@@ -180,6 +184,9 @@ namespace analizadorLexico
 
 
             treeView.Nodes.Clear();
+            richTextBoxDescripcion.Clear();
+            monthCalendar.SetDate(DateTime.Now);
+            pictureBoxImagen.Image = null;
 
             if (!analizadorLex.ListError.Any())
             {
@@ -210,12 +217,8 @@ namespace analizadorLexico
                 if (ListToken[i].TipoToken.Equals("Reservada Planificador"))
                 {
                     // Nodo Planificador
-                    string cadena = ListToken[i + 2].Valor;
-                    StringBuilder expresion = new StringBuilder(cadena);
-                    expresion.Remove(0, 1);
-                    expresion.Remove((expresion.Length - 1), 1);
-                    cadena = expresion.ToString();
-                    treeNodePlanificador = new TreeNode(cadena);
+                    string nombrePlanificacion = eliminarComillas(ListToken[i + 2].Valor);
+                    treeNodePlanificador = new TreeNode(nombrePlanificacion);
 
                     for (int j = (i + 2); j < ListToken.Count; j++)
                     {
@@ -240,6 +243,14 @@ namespace analizadorLexico
                                             // Nodo Dia
                                             treeNodeDia = new TreeNode(ListToken[l + 2].Valor);
                                             treeNodeMes.Nodes.Add(treeNodeDia);
+
+                                            Listplanificaciones.Add(new Planificaciones(nombrePlanificacion,
+                                                new DateTime(
+                                                    Int32.Parse(ListToken[j + 2].Valor),
+                                                    Int32.Parse(ListToken[k + 2].Valor),
+                                                    Int32.Parse(ListToken[l + 2].Valor)),
+                                                eliminarComillas(ListToken[l + 6].Valor),
+                                                eliminarComillas(ListToken[l + 10].Valor)));
                                         }
                                         else if (ListToken[l].TipoToken.Equals("Simbolo Parentesis Derecho"))
                                         {
@@ -259,6 +270,63 @@ namespace analizadorLexico
                         }
                     }
                     treeView.Nodes.Add(treeNodePlanificador);
+                }
+            }
+        }
+
+        public String eliminarComillas(String cadena)
+        {
+            StringBuilder expresion = new StringBuilder(cadena);
+            expresion.Remove(0, 1);
+            expresion.Remove((expresion.Length - 1), 1);
+            cadena = expresion.ToString();
+            return cadena;
+        }
+
+        private void TreeView_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (e.Node.Level == 3)
+            {
+                List<DateTime> ListFechas = new List<DateTime>();
+                string[] splitString = e.Node.FullPath.Split('\\');
+                DateTime fechaSeleccionada = new DateTime(
+                    Int32.Parse(splitString[1]),
+                    Int32.Parse(splitString[2]),
+                    Int32.Parse(splitString[3]));
+                String descripcion = "";
+                String imagen = "";
+
+                foreach (Planificaciones item in Listplanificaciones)
+                {
+                    if (splitString[0] == item.NombrePlanificacion)
+                    {
+                        ListFechas.Add(item.Fecha);
+                    }
+
+                    if (fechaSeleccionada == item.Fecha)
+                    {
+                        descripcion = item.Descripcion;
+                        imagen = item.Imagen;
+                    }
+                }
+                monthCalendar.BoldedDates = ListFechas.ToArray();
+                monthCalendar.SetDate(fechaSeleccionada);
+
+                //descripcion = descripcion.Replace("\t", " ");
+                //descripcion = descripcion.Replace("\n", " ");
+                //while (descripcion.IndexOf("  ") >= 0)
+                //{
+                //    descripcion = descripcion.Replace("  ", " ");
+                //}
+                richTextBoxDescripcion.Text = descripcion;
+
+                if (File.Exists(@imagen))
+                {
+                    Image image = Image.FromFile(@imagen);
+                    pictureBoxImagen.Image = image;
+                } else
+                {
+                    pictureBoxImagen.Image = null;
                 }
             }
         }

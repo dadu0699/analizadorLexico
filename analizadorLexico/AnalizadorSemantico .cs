@@ -16,7 +16,7 @@ namespace analizadorLexico
         {
             for (int i = 0; i < ListToken.Count; i++)
             {
-                Console.WriteLine(i + " " + ListToken[i].TipoToken);
+                // Console.WriteLine(i + " " + ListToken[i].TipoToken);
                 if (i == 0)
                 {
                     if (!ListToken[i].TipoToken.Equals("Reservada Planificador"))
