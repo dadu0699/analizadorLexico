@@ -31,19 +31,22 @@ namespace analizadorLexico
         }
 
         private int idToken;
+        private int fila;
         private Tipo tipoToken;
-        private String valor;
+        private string valor;
 
-        public Token(int idToken, Tipo tipoToken, string valor)
+        public Token(int idToken, int fila, Tipo tipoToken, string valor)
         {
             this.idToken = idToken;
+            this.fila = fila;
             this.tipoToken = tipoToken;
             this.valor = valor;
         }
 
         public int IdToken { get => idToken; set => idToken = value; }
+        public int Fila { get => fila; set => fila = value; }
         public string Valor { get => valor; set => valor = value; }
-        public String TipoToken
+        public string TipoToken
         {
             get
             {
@@ -90,7 +93,5 @@ namespace analizadorLexico
                 }
             }
         }
-
-
     }
 }

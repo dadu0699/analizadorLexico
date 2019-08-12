@@ -230,7 +230,7 @@ namespace analizadorLexico
         public void agregarToken(Token.Tipo tipo)
         {
             idToken++;
-            ListToken.Add(new Token(idToken, tipo, auxiliarLexema));
+            ListToken.Add(new Token(idToken, fila, tipo, auxiliarLexema));
             auxiliarLexema = "";
             estado = 0;
         }

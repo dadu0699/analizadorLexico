@@ -51,8 +51,8 @@
             this.buttonAnalizar = new System.Windows.Forms.Button();
             this.monthCalendar = new System.Windows.Forms.MonthCalendar();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.pictureBoxImagen = new System.Windows.Forms.PictureBox();
             this.richTextBoxDescripcion = new System.Windows.Forms.RichTextBox();
+            this.pictureBoxImagen = new System.Windows.Forms.PictureBox();
             this.menu.SuspendLayout();
             this.menuTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.minimizeButton)).BeginInit();
@@ -144,7 +144,7 @@
             this.manualAplicaciónToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(30)))), ((int)(((byte)(42)))));
             this.manualAplicaciónToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.manualAplicaciónToolStripMenuItem.Name = "manualAplicaciónToolStripMenuItem";
-            this.manualAplicaciónToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.manualAplicaciónToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.manualAplicaciónToolStripMenuItem.Text = "Manual Aplicación";
             // 
             // acercaDeToolStripMenuItem
@@ -152,8 +152,9 @@
             this.acercaDeToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(30)))), ((int)(((byte)(42)))));
             this.acercaDeToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.acercaDeToolStripMenuItem.Name = "acercaDeToolStripMenuItem";
-            this.acercaDeToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.acercaDeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.acercaDeToolStripMenuItem.Text = "Acerca de...";
+            this.acercaDeToolStripMenuItem.Click += new System.EventHandler(this.AcercaDeToolStripMenuItem_Click);
             // 
             // menuTop
             // 
@@ -307,16 +308,6 @@
             this.panel2.Size = new System.Drawing.Size(512, 273);
             this.panel2.TabIndex = 0;
             // 
-            // pictureBoxImagen
-            // 
-            this.pictureBoxImagen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-            this.pictureBoxImagen.Location = new System.Drawing.Point(256, 10);
-            this.pictureBoxImagen.Name = "pictureBoxImagen";
-            this.pictureBoxImagen.Size = new System.Drawing.Size(246, 253);
-            this.pictureBoxImagen.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBoxImagen.TabIndex = 0;
-            this.pictureBoxImagen.TabStop = false;
-            // 
             // richTextBoxDescripcion
             // 
             this.richTextBoxDescripcion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
@@ -329,6 +320,16 @@
             this.richTextBoxDescripcion.Size = new System.Drawing.Size(264, 253);
             this.richTextBoxDescripcion.TabIndex = 0;
             this.richTextBoxDescripcion.Text = "";
+            // 
+            // pictureBoxImagen
+            // 
+            this.pictureBoxImagen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
+            this.pictureBoxImagen.Location = new System.Drawing.Point(256, 10);
+            this.pictureBoxImagen.Name = "pictureBoxImagen";
+            this.pictureBoxImagen.Size = new System.Drawing.Size(246, 253);
+            this.pictureBoxImagen.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxImagen.TabIndex = 0;
+            this.pictureBoxImagen.TabStop = false;
             // 
             // Form1
             // 

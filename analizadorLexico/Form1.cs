@@ -177,6 +177,7 @@ namespace analizadorLexico
         {
             AnalizadorLex analizadorLex = new AnalizadorLex();
             AnalizadorSintactico analizadorSintactico = new AnalizadorSintactico();
+            GeneradorHTML generadorHTML = new GeneradorHTML();
 
             TextBox txtBox = tabControl1.SelectedTab.Controls.Cast<TextBox>().FirstOrDefault(x => x is TextBox);
             String entrada = txtBox.Text;
@@ -196,12 +197,14 @@ namespace analizadorLexico
                     {
                         // analizadorLex.imprimirTokens();
                         agregarNodos(analizadorLex.ListToken);
+                        generadorHTML.generarReporte("listadoTokens.html", analizadorLex.ListToken);
                     }
                 }
             }
             else
             {
                 // analizadorLex.imprimirErrores();
+                generadorHTML.generarReporte("listadoErrores.html", analizadorLex.ListError);
             }
         }
 
@@ -329,6 +332,12 @@ namespace analizadorLexico
                     pictureBoxImagen.Image = null;
                 }
             }
+        }
+
+        private void AcercaDeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            msg m = new msg();
+            m.Show();
         }
     }
 }
