@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace analizadorLexico
 {
-    class AnalizadorSemantico
+    class AnalizadorSintactico
     {
-        public AnalizadorSemantico()
+        public AnalizadorSintactico()
         {
         }
 
@@ -171,7 +171,7 @@ namespace analizadorLexico
                     }
                 }
             }
-            Console.WriteLine("Analisis semantico finalizado");
+            Console.WriteLine("Analisis sintactico finalizado");
             return true;
         }
     }

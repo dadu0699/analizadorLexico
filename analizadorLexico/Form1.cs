@@ -176,7 +176,7 @@ namespace analizadorLexico
         private void ButtonAnalizar_Click(object sender, EventArgs e)
         {
             AnalizadorLex analizadorLex = new AnalizadorLex();
-            AnalizadorSemantico analizadorSemantico = new AnalizadorSemantico();
+            AnalizadorSintactico analizadorSintactico = new AnalizadorSintactico();
 
             TextBox txtBox = tabControl1.SelectedTab.Controls.Cast<TextBox>().FirstOrDefault(x => x is TextBox);
             String entrada = txtBox.Text;
@@ -192,7 +192,7 @@ namespace analizadorLexico
             {
                 if (analizadorLex.ListToken.Any())
                 {
-                    if (analizadorSemantico.analizar(analizadorLex.ListToken))
+                    if (analizadorSintactico.analizar(analizadorLex.ListToken))
                     {
                         // analizadorLex.imprimirTokens();
                         agregarNodos(analizadorLex.ListToken);
