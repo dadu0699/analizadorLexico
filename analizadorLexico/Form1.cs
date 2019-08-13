@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -13,8 +14,11 @@ namespace analizadorLexico
 {
     public partial class Form1 : Form
     {
-        private int countTab;
         private List<Planificaciones> Listplanificaciones;
+        private int countTab;
+        private Boolean draggable;
+        private int mouseX;
+        private int mouseY;
 
         public Form1()
         {
@@ -112,6 +116,27 @@ namespace analizadorLexico
             }
         }
 
+        private void MenuTop_MouseDown(object sender, MouseEventArgs e)
+        {
+            draggable = true;
+            mouseX = Cursor.Position.X - this.Left;
+            mouseY = Cursor.Position.Y - this.Top;
+        }
+
+        private void MenuTop_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (draggable)
+            {
+                this.Top = Cursor.Position.Y - mouseY;
+                this.Left = Cursor.Position.X - mouseX;
+            }
+        }
+
+        private void MenuTop_MouseUp(object sender, MouseEventArgs e)
+        {
+            draggable = false;
+        }
+
         private void SalirToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -198,13 +223,26 @@ namespace analizadorLexico
                         // analizadorLex.imprimirTokens();
                         agregarNodos(analizadorLex.ListToken);
                         generadorHTML.generarReporte("listadoTokens.html", analizadorLex.ListToken);
+
+                        if (File.Exists(@System.IO.Directory.GetCurrentDirectory() + "\\listadoTokens.html"))
+                        {
+                            Process.Start(@System.IO.Directory.GetCurrentDirectory() + "\\listadoTokens.html");
+                        }
                     }
                 }
             }
             else
             {
                 // analizadorLex.imprimirErrores();
+                generadorHTML.generarReporte("listadoTokens.html", analizadorLex.ListToken);
                 generadorHTML.generarReporte("listadoErrores.html", analizadorLex.ListError);
+
+                if (File.Exists(@System.IO.Directory.GetCurrentDirectory() + "\\listadoTokens.html") 
+                    && File.Exists(@System.IO.Directory.GetCurrentDirectory() + "\\listadoErrores.html"))
+                {
+                    Process.Start(@System.IO.Directory.GetCurrentDirectory() + "\\listadoTokens.html");
+                    Process.Start(@System.IO.Directory.GetCurrentDirectory() + "\\listadoErrores.html");
+                }
             }
         }
 
@@ -338,6 +376,14 @@ namespace analizadorLexico
         {
             msg m = new msg();
             m.Show();
+        }
+
+        private void ManualAplicaciónToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(@System.IO.Directory.GetCurrentDirectory() + "\\Manual de Usuario.pdf"))
+            {
+                Process.Start(@System.IO.Directory.GetCurrentDirectory() + "\\Manual de Usuario.pdf");
+            }
         }
     }
 }

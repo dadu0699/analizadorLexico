@@ -146,13 +146,14 @@
             this.manualAplicaciónToolStripMenuItem.Name = "manualAplicaciónToolStripMenuItem";
             this.manualAplicaciónToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.manualAplicaciónToolStripMenuItem.Text = "Manual Aplicación";
+            this.manualAplicaciónToolStripMenuItem.Click += new System.EventHandler(this.ManualAplicaciónToolStripMenuItem_Click);
             // 
             // acercaDeToolStripMenuItem
             // 
             this.acercaDeToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(30)))), ((int)(((byte)(42)))));
             this.acercaDeToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.acercaDeToolStripMenuItem.Name = "acercaDeToolStripMenuItem";
-            this.acercaDeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.acercaDeToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.acercaDeToolStripMenuItem.Text = "Acerca de...";
             this.acercaDeToolStripMenuItem.Click += new System.EventHandler(this.AcercaDeToolStripMenuItem_Click);
             // 
@@ -167,6 +168,9 @@
             this.menuTop.Name = "menuTop";
             this.menuTop.Size = new System.Drawing.Size(1024, 30);
             this.menuTop.TabIndex = 0;
+            this.menuTop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MenuTop_MouseDown);
+            this.menuTop.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MenuTop_MouseMove);
+            this.menuTop.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MenuTop_MouseUp);
             // 
             // minimizeButton
             // 
