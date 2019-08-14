@@ -16,7 +16,7 @@ namespace analizadorLexico
     {
         private List<Planificaciones> Listplanificaciones;
         private int countTab;
-        private Boolean draggable;
+        private bool draggable;
         private int mouseX;
         private int mouseY;
 
@@ -87,15 +87,17 @@ namespace analizadorLexico
             countTab++;
             TabPage tabPage = new TabPage("Tab" + countTab);
 
-            TextBox txtBox = new TextBox();
-            txtBox.BackColor = Color.FromArgb(31, 36, 48);
-            txtBox.BorderStyle = BorderStyle.Fixed3D;
-            txtBox.Font = new Font("Microsoft Sans Serif", 12);
-            txtBox.ForeColor = Color.FromArgb(203, 204, 198);
-            txtBox.Dock = DockStyle.Fill;
-            txtBox.Multiline = true;
-            txtBox.AcceptsTab = true;
-            txtBox.ScrollBars = ScrollBars.Vertical;
+            TextBox txtBox = new TextBox
+            {
+                BackColor = Color.FromArgb(31, 36, 48),
+                BorderStyle = BorderStyle.Fixed3D,
+                Font = new Font("Microsoft Sans Serif", 12),
+                ForeColor = Color.FromArgb(203, 204, 198),
+                Dock = DockStyle.Fill,
+                Multiline = true,
+                AcceptsTab = true,
+                ScrollBars = ScrollBars.Vertical
+            };
 
             tabPage.Controls.Add(txtBox);
             tabControl1.TabPages.Add(tabPage);
@@ -144,15 +146,17 @@ namespace analizadorLexico
 
         private void CargarArchivoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = @"C:\";
-            openFileDialog.RestoreDirectory = true;
-            openFileDialog.FileName = "";
-            openFileDialog.DefaultExt = "ly";
-            openFileDialog.Filter = "Archivos LY (*.ly)|*.ly";
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                InitialDirectory = @"C:\",
+                RestoreDirectory = true,
+                FileName = "",
+                DefaultExt = "ly",
+                Filter = "Archivos LY (*.ly)|*.ly"
+            };
 
             TextBox txtBox = tabControl1.SelectedTab.Controls.Cast<TextBox>().FirstOrDefault(x => x is TextBox);
-            String line = "";
+            string line = "";
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -175,12 +179,14 @@ namespace analizadorLexico
 
         private void GuardarArchivoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.InitialDirectory = @"C:\";
-            saveFileDialog.RestoreDirectory = true;
-            saveFileDialog.FileName = "";
-            saveFileDialog.DefaultExt = "ly";
-            saveFileDialog.Filter = "Archivos LY (*.ly)|*.ly";
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                InitialDirectory = @"C:\",
+                RestoreDirectory = true,
+                FileName = "",
+                DefaultExt = "ly",
+                Filter = "Archivos LY (*.ly)|*.ly"
+            };
 
             TextBox txtBox = tabControl1.SelectedTab.Controls.Cast<TextBox>().FirstOrDefault(x => x is TextBox);
 
@@ -194,7 +200,6 @@ namespace analizadorLexico
 
                 tabControl1.SelectedTab.Text = saveFileDialog.FileName;
                 Console.WriteLine("Archivo " + saveFileDialog.FileName + " guardado con exito");
-                // txtBox.Clear();
             }
         }
 
@@ -205,7 +210,7 @@ namespace analizadorLexico
             GeneradorHTML generadorHTML = new GeneradorHTML();
 
             TextBox txtBox = tabControl1.SelectedTab.Controls.Cast<TextBox>().FirstOrDefault(x => x is TextBox);
-            String entrada = txtBox.Text;
+            string entrada = txtBox.Text;
             analizadorLex.escaner(entrada);
 
 
@@ -224,9 +229,9 @@ namespace analizadorLexico
                         agregarNodos(analizadorLex.ListToken);
                         generadorHTML.generarReporte("listadoTokens.html", analizadorLex.ListToken);
 
-                        if (File.Exists(@System.IO.Directory.GetCurrentDirectory() + "\\listadoTokens.html"))
+                        if (File.Exists(Directory.GetCurrentDirectory() + "\\listadoTokens.html"))
                         {
-                            Process.Start(@System.IO.Directory.GetCurrentDirectory() + "\\listadoTokens.html");
+                            Process.Start(Directory.GetCurrentDirectory() + "\\listadoTokens.html");
                         }
                     }
                 }
@@ -237,18 +242,18 @@ namespace analizadorLexico
                 generadorHTML.generarReporte("listadoTokens.html", analizadorLex.ListToken);
                 generadorHTML.generarReporte("listadoErrores.html", analizadorLex.ListError);
 
-                if (File.Exists(@System.IO.Directory.GetCurrentDirectory() + "\\listadoTokens.html") 
-                    && File.Exists(@System.IO.Directory.GetCurrentDirectory() + "\\listadoErrores.html"))
+                if (File.Exists(Directory.GetCurrentDirectory() + "\\listadoTokens.html") 
+                    && File.Exists(Directory.GetCurrentDirectory() + "\\listadoErrores.html"))
                 {
-                    Process.Start(@System.IO.Directory.GetCurrentDirectory() + "\\listadoTokens.html");
-                    Process.Start(@System.IO.Directory.GetCurrentDirectory() + "\\listadoErrores.html");
+                    Process.Start(Directory.GetCurrentDirectory() + "\\listadoTokens.html");
+                    Process.Start(Directory.GetCurrentDirectory() + "\\listadoErrores.html");
                 }
             }
         }
 
         private void agregarNodos(List<Token> ListToken)
         {
-            TreeNode treeNodePlanificador = null;
+            TreeNode treeNodePlanificador;
             TreeNode treeNodeAnio;
             TreeNode treeNodeMes;
             TreeNode treeNodeDia;
@@ -287,9 +292,9 @@ namespace analizadorLexico
 
                                             Listplanificaciones.Add(new Planificaciones(nombrePlanificacion,
                                                 new DateTime(
-                                                    Int32.Parse(ListToken[j + 2].Valor),
-                                                    Int32.Parse(ListToken[k + 2].Valor),
-                                                    Int32.Parse(ListToken[l + 2].Valor)),
+                                                    int.Parse(ListToken[j + 2].Valor),
+                                                    int.Parse(ListToken[k + 2].Valor),
+                                                    int.Parse(ListToken[l + 2].Valor)),
                                                 eliminarComillas(ListToken[l + 6].Valor),
                                                 eliminarComillas(ListToken[l + 10].Valor)));
                                         }
@@ -331,9 +336,9 @@ namespace analizadorLexico
                 List<DateTime> ListFechas = new List<DateTime>();
                 string[] splitString = e.Node.FullPath.Split('\\');
                 DateTime fechaSeleccionada = new DateTime(
-                    Int32.Parse(splitString[1]),
-                    Int32.Parse(splitString[2]),
-                    Int32.Parse(splitString[3]));
+                    int.Parse(splitString[1]),
+                    int.Parse(splitString[2]),
+                    int.Parse(splitString[3]));
                 String descripcion = "";
                 String imagen = "";
 
@@ -380,9 +385,9 @@ namespace analizadorLexico
 
         private void ManualAplicaciónToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (File.Exists(@System.IO.Directory.GetCurrentDirectory() + "\\Manual de Usuario.pdf"))
+            if (File.Exists(Directory.GetCurrentDirectory() + "\\Manual de Usuario.pdf"))
             {
-                Process.Start(@System.IO.Directory.GetCurrentDirectory() + "\\Manual de Usuario.pdf");
+                Process.Start(Directory.GetCurrentDirectory() + "\\Manual de Usuario.pdf");
             }
         }
     }
