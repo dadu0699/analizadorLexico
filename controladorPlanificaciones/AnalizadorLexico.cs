@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace analizadorLexico
+namespace controladorPlanificaciones
 {
-    class AnalizadorLex
+    class AnalizadorLexico
     {
         private String auxiliarLexema;
         private int estado;
@@ -18,7 +18,7 @@ namespace analizadorLexico
         internal List<Token> ListToken { get; set; }
         internal List<Error> ListError { get; set; }
 
-        public AnalizadorLex()
+        public AnalizadorLexico()
         {
             ListToken = new List<Token>();
             ListError = new List<Error>();

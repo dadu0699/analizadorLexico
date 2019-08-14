@@ -1,4 +1,4 @@
-﻿namespace analizadorLexico
+﻿namespace controladorPlanificaciones
 {
     partial class Form1
     {

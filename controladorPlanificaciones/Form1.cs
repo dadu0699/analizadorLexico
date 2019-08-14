@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace analizadorLexico
+namespace controladorPlanificaciones
 {
     public partial class Form1 : Form
     {
@@ -205,13 +205,13 @@ namespace analizadorLexico
 
         private void ButtonAnalizar_Click(object sender, EventArgs e)
         {
-            AnalizadorLex analizadorLex = new AnalizadorLex();
+            AnalizadorLexico analizadorLexico = new AnalizadorLexico();
             AnalizadorSintactico analizadorSintactico = new AnalizadorSintactico();
             GeneradorHTML generadorHTML = new GeneradorHTML();
 
             TextBox txtBox = tabControl1.SelectedTab.Controls.Cast<TextBox>().FirstOrDefault(x => x is TextBox);
             string entrada = txtBox.Text;
-            analizadorLex.escaner(entrada);
+            analizadorLexico.escaner(entrada);
 
 
             treeView.Nodes.Clear();
@@ -219,15 +219,15 @@ namespace analizadorLexico
             monthCalendar.SetDate(DateTime.Now);
             pictureBoxImagen.Image = null;
 
-            if (!analizadorLex.ListError.Any())
+            if (!analizadorLexico.ListError.Any())
             {
-                if (analizadorLex.ListToken.Any())
+                if (analizadorLexico.ListToken.Any())
                 {
-                    if (analizadorSintactico.analizar(analizadorLex.ListToken))
+                    if (analizadorSintactico.analizar(analizadorLexico.ListToken))
                     {
-                        // analizadorLex.imprimirTokens();
-                        agregarNodos(analizadorLex.ListToken);
-                        generadorHTML.generarReporte("listadoTokens.html", analizadorLex.ListToken);
+                        // analizadorLexico.imprimirTokens();
+                        agregarNodos(analizadorLexico.ListToken);
+                        generadorHTML.generarReporte("listadoTokens.html", analizadorLexico.ListToken);
 
                         if (File.Exists(Directory.GetCurrentDirectory() + "\\listadoTokens.html"))
                         {
@@ -238,9 +238,9 @@ namespace analizadorLexico
             }
             else
             {
-                // analizadorLex.imprimirErrores();
-                generadorHTML.generarReporte("listadoTokens.html", analizadorLex.ListToken);
-                generadorHTML.generarReporte("listadoErrores.html", analizadorLex.ListError);
+                // analizadorLexico.imprimirErrores();
+                generadorHTML.generarReporte("listadoTokens.html", analizadorLexico.ListToken);
+                generadorHTML.generarReporte("listadoErrores.html", analizadorLexico.ListError);
 
                 if (File.Exists(Directory.GetCurrentDirectory() + "\\listadoTokens.html") 
                     && File.Exists(Directory.GetCurrentDirectory() + "\\listadoErrores.html"))

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace analizadorLexico.Properties
+namespace controladorPlanificaciones.Properties
 {
 
 
