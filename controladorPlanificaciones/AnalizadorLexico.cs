@@ -8,7 +8,7 @@ namespace controladorPlanificaciones
 {
     class AnalizadorLexico
     {
-        private String auxiliarLexema;
+        private string auxiliarLexema;
         private int estado;
         private int idToken;
         private int idError;
@@ -32,7 +32,7 @@ namespace controladorPlanificaciones
 
         public void escaner(String entrada)
         {
-            Char caracter;
+            char caracter;
             entrada += "#";
 
             for (int i = 0; i < entrada.Length; i++)
@@ -87,7 +87,7 @@ namespace controladorPlanificaciones
                         }
                         break;
                     case 1:
-                        if (Char.IsLetter(caracter))
+                        if (char.IsLetter(caracter))
                         {
                             estado = 1;
                             auxiliarLexema += caracter;
@@ -99,7 +99,7 @@ namespace controladorPlanificaciones
                         }
                         break;
                     case 2:
-                        if (Char.IsDigit(caracter))
+                        if (char.IsDigit(caracter))
                         {
                             estado = 2;
                             auxiliarLexema += caracter;
@@ -127,7 +127,7 @@ namespace controladorPlanificaciones
             }
         }
 
-        public Boolean agregarSimbolo(Char caracter)
+        public bool agregarSimbolo(char caracter)
         {
             if (caracter.Equals('['))
             {
@@ -254,7 +254,7 @@ namespace controladorPlanificaciones
             foreach (Error item in ListError)
             {
                 Console.WriteLine(item.IdError + " ---> " + item.Fila + " ---> " + item.Columna
-                    + " <--> " + item.Caracter + " ---> " + item.Descripcion);
+                    + " ---> " + item.Caracter + " ---> " + item.Descripcion);
             }
         }
     }
