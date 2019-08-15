@@ -30,7 +30,7 @@ namespace controladorPlanificaciones
             minimizeButton.MouseEnter += OnMouseEnter;
             minimizeButton.MouseLeave += OnMouseLeave;
 
-            this.tabControl1.MouseUp += new MouseEventHandler(tabControl1_MouseUp);
+            tabControl1.MouseUp += new MouseEventHandler(tabControl1_MouseUp);
 
             menu.Renderer = new MyRenderer();
 
@@ -121,16 +121,16 @@ namespace controladorPlanificaciones
         private void MenuTop_MouseDown(object sender, MouseEventArgs e)
         {
             draggable = true;
-            mouseX = Cursor.Position.X - this.Left;
-            mouseY = Cursor.Position.Y - this.Top;
+            mouseX = Cursor.Position.X - Left;
+            mouseY = Cursor.Position.Y - Top;
         }
 
         private void MenuTop_MouseMove(object sender, MouseEventArgs e)
         {
             if (draggable)
             {
-                this.Top = Cursor.Position.Y - mouseY;
-                this.Left = Cursor.Position.X - mouseX;
+                Top = Cursor.Position.Y - mouseY;
+                Left = Cursor.Position.X - mouseX;
             }
         }
 
@@ -339,8 +339,8 @@ namespace controladorPlanificaciones
                     int.Parse(splitString[1]),
                     int.Parse(splitString[2]),
                     int.Parse(splitString[3]));
-                String descripcion = "";
-                String imagen = "";
+                string descripcion = "";
+                string imagen = "";
 
                 foreach (Planificaciones item in Listplanificaciones)
                 {
