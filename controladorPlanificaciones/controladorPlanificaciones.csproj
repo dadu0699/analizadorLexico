@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{7AE60548-11A8-42EF-A456-4D7F3FE46250}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>analizadorLexico</RootNamespace>
-    <AssemblyName>analizadorLexico</AssemblyName>
+    <RootNamespace>controladorPlanificaciones</RootNamespace>
+    <AssemblyName>controladorPlanificaciones</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -81,6 +81,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

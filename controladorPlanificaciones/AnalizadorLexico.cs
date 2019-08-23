@@ -12,8 +12,8 @@ namespace controladorPlanificaciones
         private int estado;
         private int idToken;
         private int idError;
-        private int fila = 1;
-        private int columna = 1;
+        private int fila;
+        private int columna;
 
         internal List<Token> ListToken { get; set; }
         internal List<Error> ListError { get; set; }
@@ -30,7 +30,7 @@ namespace controladorPlanificaciones
             columna = 1;
         }
 
-        public void escaner(String entrada)
+        public void escaner(string entrada)
         {
             char caracter;
             entrada += "#";

@@ -349,7 +349,7 @@ namespace controladorPlanificaciones
                         ListFechas.Add(item.Fecha);
                     }
 
-                    if (fechaSeleccionada == item.Fecha)
+                    if (fechaSeleccionada == item.Fecha && splitString[0] == item.NombrePlanificacion)
                     {
                         descripcion = item.Descripcion;
                         imagen = item.Imagen;
